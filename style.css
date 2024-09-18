@@ -1,0 +1,17 @@
+body,
+html {
+    margin: 0;
+    overflow-x: hidden;
+    height: 100%;
+    height: 200vh;
+}
+
+canvas {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background-color: #111;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
