@@ -15,3 +15,48 @@ canvas {
     top: 0;
     left: 0;
 }
+
+/* Police pour les titres */
+.title {
+    color: #000;
+    /* Blanc ou un ton néon */
+    font-family: "Quicksand", sans-serif;
+    font-size: 4rem;
+    text-align: center;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+/* Police pour les sous-titres et le reste */
+.subtitle {
+    font-family: "Quicksand", sans-serif;
+    color: #000;
+    font-size: 2rem;
+    text-align: center;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+
+#scene1 {
+    position: absolute;
+    top: 70px;
+    width: 100%; 
+    z-index: 10;
+    /* Le texte doit apparaître au-dessus du canvas 3D */
+}
+
+/* Effets de glow pour donner un côté vaporwave */
+/* .title,
+.subtitle {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+} */
+
+.title {
+    margin: 0;
+}
+
+.subtitle {
+    margin-top: 10px;
+}

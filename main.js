@@ -98,7 +98,7 @@ function animate() {
   camera.position.x = radius * Math.sin(angle); // Calcul de la position X
   camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
 
-  camera.lookAt(0, 10, 0); // Toujours regarder le centre de la statue
+  camera.lookAt(0, 15, 0); // Toujours regarder le centre de la statue
 
   renderer.render(scene, camera);
 }
