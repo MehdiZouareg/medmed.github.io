@@ -231,7 +231,7 @@ function scrollToScene(direction) {
     nextSceneScroll = Math.floor(currentScroll / scrollAmount) * scrollAmount; // Vers la scène précédente
   }
 
-  const scrollDuration = 1000; // Durée de l'animation en ms
+  const scrollDuration = 500; // Durée de l'animation en ms
   const startTime = Date.now();
 
   function scrollStep() {
@@ -270,9 +270,12 @@ window.addEventListener("scroll", () => {
 
   // Lancer l'auto-scroll après une pause du scroll manuel
   autoScrollTimeout = setTimeout(() => {
-    isUserScrolling = false;
-    scrollToScene(scrollDirection); // Scroll automatique vers la scène dans la bonne direction
-  }, 1000); // Temps d'attente après l'arrêt du scroll manuel
+    if (isUserScrolling) {
+      isUserScrolling = false;
+      scrollToScene(scrollDirection);
+    }
+    // Scroll automatique vers la scène dans la bonne direction
+  }, 500); // Temps d'attente après l'arrêt du scroll manuel
 });
 
 window.onbeforeunload = function () {
