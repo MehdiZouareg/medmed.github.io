@@ -44,6 +44,17 @@ canvas {
     animation: bounce 1.5s infinite;
 }
 
+.link-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    /* Espacement entre les logos */
+    justify-content: center;
+    /* Centre les logos horizontalement */
+    align-items: center;
+    /* Centre les logos verticalement */
+}
+
 .logo-container {
     display: flex;
     flex-wrap: wrap;
@@ -120,7 +131,7 @@ canvas {
 #scene1 {
     position: absolute;
     top: 5px;
-    width: 100%; 
+    width: 33%; 
     z-index: 10;
     /* Le texte doit apparaître au-dessus du canvas 3D */
 }
