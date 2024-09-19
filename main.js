@@ -68,37 +68,124 @@ mtlLoader.load("heliosbust.mtl", (materials) => {
   objLoader.setPath("helios/");
   objLoader.load("heliosbust.obj", (object) => {
     object.scale.set(0.75, 0.75, 0.75); // Adapter la taille si besoin
-    object.position.set(0, 1, 0); // Ajuster la position si nécessaire
+    object.position.set(0, 0, 0); // Ajuster la position si nécessaire
     scene.add(object);
   });
 });
 
-// Rail de la caméra (exemple simple)
-let scrollY = window.scrollY;
-const maxScroll = document.body.scrollHeight - window.innerHeight;
+// Fonction d'interpolation linéaire
+function lerp(x, y, a) {
+  return (1 - a) * x + a * y;
+}
 
-// Rail de la caméra (déplacement sur l'axe Z en fonction du scroll)
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY; // Position verticale du scroll
-  const maxScroll = document.body.scrollHeight - window.innerHeight;
-  const t = scrollY / maxScroll; // Ratio de défilement
+angle = 0;
 
-  console.log("scrollY:", scrollY, "maxScroll:", maxScroll, "t:", t); // Pour déboguer le scroll
-});
+// Animation des scènes basées sur le défilement
+const animationScripts = [
+  {
+    start: 0,
+    end: 18,
+    func: () => {
+      camera.position.z = lerp(20, 10, scalePercent(0, 20));
+      // Déplacer la caméra autour de l'axe Y (rotation autour de l'objet)
+      const radius = lerp(25, 30, scalePercent(0, 20)); // Distance entre la caméra et la statue
+      angle += 0.001; // Vitesse de rotation
+      camera.position.x = radius * Math.sin(angle); // Calcul de la position X
+      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+      camera.position.y = lerp(20, 1, scalePercent(0, 20));
+
+      camera.lookAt(0, 10, 0); // Toujours regarder le centre de la statue
+    },
+  },
+  {
+    start: 20,
+    end: 40,
+    func: () => {
+      angle = lerp(0, 1, scalePercent(20, 40));
+      camera.rotation.y = 0;
+      const radius = 15; // Distance entre la caméra et la statue
+      camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
+      camera.position.y = lerp(1, 25, scalePercent(20, 40));
+      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+
+      camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
+    },
+  },
+  {
+    start: 40,
+    end: 60,
+    func: () => {
+      angle = lerp(5, 10, scalePercent(40, 60));
+
+      camera.rotation.y = 0;
+      const radius = 15; // Distance entre la caméra et la statue
+      camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
+      camera.position.y = lerp(1, 25, scalePercent(20, 40));
+      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+
+      camera.lookAt(10, 15, 0); // Toujours regarder le centre de la statue
+    },
+  },
+  {
+    start: 60,
+    end: 80,
+    func: () => {
+      angle = lerp(15, 0, scalePercent(20, 40));
+
+      camera.rotation.y = 0;
+      const radius = 15; // Distance entre la caméra et la statue
+      camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
+      camera.position.y = lerp(1, 25, scalePercent(20, 40));
+      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+
+      camera.lookAt(10, 15, 0); // Toujours regarder le centre de la statue
+    },
+  },
+  {
+    start: 80,
+    end: 100,
+    func: () => {
+      camera.rotation.y = 0;
+      const radius = 15; // Distance entre la caméra et la statue
+      camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
+      camera.position.y = lerp(1, 25, scalePercent(20, 40));
+      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+
+      camera.lookAt(10, 15, 0); // Toujours regarder le centre de la statue
+    },
+  },
+];
+
+// Calcul du pourcentage de défilement
+function scalePercent(start, end) {
+  return (scrollPercent - start) / (end - start);
+}
+
+let scrollPercent = 0;
+document.body.onscroll = () => {
+  scrollPercent =
+    ((document.documentElement.scrollTop || document.body.scrollTop) /
+      ((document.documentElement.scrollHeight || document.body.scrollHeight) -
+        document.documentElement.clientHeight)) *
+    100;
+  document.getElementById("scrollProgress").innerText =
+    "Scroll Progress : " + scrollPercent.toFixed(2);
+};
+
+function playScrollAnimations() {
+  animationScripts.forEach((a) => {
+    if (scrollPercent >= a.start && scrollPercent < a.end) {
+      a.func();
+    }
+  });
+}
 
 // Animation pour faire tourner la caméra autour du buste
-let angle = 0; // Angle initial de la caméra
 
 function animate() {
   requestAnimationFrame(animate);
 
-  // Déplacer la caméra autour de l'axe Y (rotation autour de l'objet)
-  const radius = 25; // Distance entre la caméra et la statue
-  angle += 0.001; // Vitesse de rotation
-  camera.position.x = radius * Math.sin(angle); // Calcul de la position X
-  camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
-
-  camera.lookAt(0, 15, 0); // Toujours regarder le centre de la statue
+  playScrollAnimations();
 
   renderer.render(scene, camera);
 }
