@@ -84,7 +84,7 @@ angle = 0;
 const animationScripts = [
   {
     start: 0,
-    end: 18,
+    end: 20,
     func: () => {
       camera.position.z = lerp(20, 10, scalePercent(0, 20));
       // Déplacer la caméra autour de l'axe Y (rotation autour de l'objet)
@@ -106,7 +106,11 @@ const animationScripts = [
       const radius = 15; // Distance entre la caméra et la statue
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
       camera.position.y = lerp(1, 25, scalePercent(20, 40));
-      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+      camera.position.z = lerp(
+        radius * Math.cos(angle),
+        25,
+        scalePercent(20, 40)
+      ); // Calcul de la position Z
 
       camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
     },
@@ -115,43 +119,54 @@ const animationScripts = [
     start: 40,
     end: 60,
     func: () => {
-      angle = lerp(5, 10, scalePercent(40, 60));
-
+      angle = lerp(0, 1, scalePercent(20, 40));
       camera.rotation.y = 0;
       const radius = 15; // Distance entre la caméra et la statue
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
       camera.position.y = lerp(1, 25, scalePercent(20, 40));
-      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+      camera.position.z = lerp(
+        radius * Math.cos(angle),
+        25,
+        scalePercent(20, 40)
+      ); // Calcul de la position Z
 
-      camera.lookAt(10, 15, 0); // Toujours regarder le centre de la statue
+      camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
     },
   },
   {
     start: 60,
     end: 80,
     func: () => {
-      angle = lerp(15, 0, scalePercent(20, 40));
-
+      angle = lerp(0, 1, scalePercent(20, 40));
       camera.rotation.y = 0;
       const radius = 15; // Distance entre la caméra et la statue
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
       camera.position.y = lerp(1, 25, scalePercent(20, 40));
-      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+      camera.position.z = lerp(
+        radius * Math.cos(angle),
+        25,
+        scalePercent(20, 40)
+      ); // Calcul de la position Z
 
-      camera.lookAt(10, 15, 0); // Toujours regarder le centre de la statue
+      camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
     },
   },
   {
     start: 80,
     end: 100,
     func: () => {
+      angle = lerp(0, 1, scalePercent(20, 40));
       camera.rotation.y = 0;
       const radius = 15; // Distance entre la caméra et la statue
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
       camera.position.y = lerp(1, 25, scalePercent(20, 40));
-      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+      camera.position.z = lerp(
+        radius * Math.cos(angle),
+        25,
+        scalePercent(20, 40)
+      ); // Calcul de la position Z
 
-      camera.lookAt(10, 15, 0); // Toujours regarder le centre de la statue
+      camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
     },
   },
 ];
