@@ -119,7 +119,7 @@ canvas {
 .subtitle {
     font-family: "Quicksand", sans-serif;
     color: #000;
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-align: left;
     margin-left: 100px;
     margin-top: 0px;
@@ -164,6 +164,14 @@ canvas {
     position: absolute;
     top: 800vh;
     width: 50%;
+    z-index: 10;
+    /* Le texte doit apparaître au-dessus du canvas 3D */
+}
+
+#scene6 {
+    position: absolute;
+    top: 900vh;
+    width: 33%;
     z-index: 10;
     /* Le texte doit apparaître au-dessus du canvas 3D */
 }

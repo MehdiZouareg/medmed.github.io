@@ -159,32 +159,28 @@ const animationScripts = [
       camera.rotation.y = 0;
       const radius = 15; // Distance entre la caméra et la statue
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
-      camera.position.y = lerp(1, 25, scalePercent(20, 40));
+      camera.position.y = lerp(1, 10, scalePercent(80, 90));
       camera.position.z = lerp(
         radius * Math.cos(angle),
-        25,
+        10,
         scalePercent(20, 40)
       ); // Calcul de la position Z
 
-      camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
+      camera.lookAt(0, 20, 0); // Toujours regarder le centre de la statue
     },
   },
   {
     start: 90,
-    end: 100,
+    end: 120,
     func: () => {
-      angle = lerp(0, 1, scalePercent(20, 40));
       camera.rotation.y = 0;
-      const radius = 15; // Distance entre la caméra et la statue
-      camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
-      camera.position.y = lerp(1, 50, scalePercent(20, 40));
-      camera.position.z = lerp(
-        radius * Math.cos(angle),
-        25,
-        scalePercent(20, 40)
-      ); // Calcul de la position Z
+      const radius = lerp(15, 10, scalePercent(90, 120)); // Distance entre la caméra et la statue
+      camera.position.y = lerp(1, 10, scalePercent(90, 120));
+      angle += 0.001; // Vitesse de rotation
+      camera.position.x = radius * Math.sin(angle); // Calcul de la position X
+      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
 
-      camera.lookAt(-10, 15, 0); // Toujours regarder le centre de la statue
+      camera.lookAt(0, 10, 0); // Toujours regarder le centre de la statue
     },
   },
 ];
@@ -212,6 +208,70 @@ function playScrollAnimations() {
     }
   });
 }
+
+function easeInOutQuad(t) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+}
+
+let lastScrollTop = 0;
+
+function scrollToScene(direction) {
+  const scrollAmountVH = 200; // Chaque scène fait 100vh
+  const scrollAmount = (scrollAmountVH / 100) * window.innerHeight; // Conversion en pixels
+
+  const currentScroll = window.scrollY;
+  let nextSceneScroll;
+
+  // Calculer la prochaine scène en fonction du sens du défilement
+  if (direction === "down") {
+    nextSceneScroll = Math.ceil(currentScroll / scrollAmount) * scrollAmount; // Vers la scène suivante
+  } else {
+    nextSceneScroll = Math.floor(currentScroll / scrollAmount) * scrollAmount; // Vers la scène précédente
+  }
+
+  const scrollDuration = 1000; // Durée de l'animation en ms
+  const startTime = Date.now();
+
+  function scrollStep() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / scrollDuration, 1); // Limiter à 1
+
+    // Calcul de la position avec easing
+    const ease = easeInOutQuad(progress);
+    const scrollPosition =
+      currentScroll + (nextSceneScroll - currentScroll) * ease;
+
+    window.scrollTo(0, scrollPosition);
+
+    if (progress < 1) {
+      requestAnimationFrame(scrollStep);
+    }
+  }
+
+  requestAnimationFrame(scrollStep);
+}
+
+// Détecter le sens du scroll manuel de l'utilisateur
+let isUserScrolling = false;
+let autoScrollTimeout;
+
+window.addEventListener("scroll", () => {
+  isUserScrolling = true;
+
+  clearTimeout(autoScrollTimeout);
+
+  const currentScrollTop = window.scrollY;
+
+  // Détecter si l'utilisateur scrolle vers le haut ou vers le bas
+  let scrollDirection = currentScrollTop > lastScrollTop ? "down" : "up";
+  lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Ne pas descendre en dessous de 0
+
+  // Lancer l'auto-scroll après une pause du scroll manuel
+  autoScrollTimeout = setTimeout(() => {
+    isUserScrolling = false;
+    scrollToScene(scrollDirection); // Scroll automatique vers la scène dans la bonne direction
+  }, 750); // Temps d'attente après l'arrêt du scroll manuel
+});
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
