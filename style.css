@@ -33,16 +33,6 @@ canvas {
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
 }
 
-/* Flèche animée */
-.arrow {
-    width: 20px;
-    height: 20px;
-    border-bottom: 3px solid #fff;
-    border-right: 3px solid #fff;
-    transform: rotate(45deg);
-    margin: 0 auto;
-    animation: bounce 1.5s infinite;
-}
 
 .link-container {
     display: flex;
@@ -82,6 +72,33 @@ canvas {
     /* Augmente l'opacité au survol */
 }
 
+.link-logo {
+    width: 50px;
+    /* Largeur des logos, ajuste selon tes besoins */
+    height: auto;
+    /* Maintient les proportions des logos */
+    opacity: 0.8;
+    /* Légère transparence pour un effet visuel */
+    transition: opacity 0.3s ease;
+    /* Effet de transition au survol */
+}
+
+.logo:hover {
+    opacity: 1;
+    /* Augmente l'opacité au survol */
+}
+
+/* Flèche animée */
+.arrow {
+    width: 20px;
+    height: 20px;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
+    transform: rotate(45deg);
+    margin: 0 auto;
+    animation: bounce 1.5s infinite;
+}
+
 /* Animation pour la flèche */
 @keyframes bounce {
 
@@ -100,6 +117,25 @@ canvas {
     60% {
         transform: translateY(5px) rotate(45deg);
     }
+}
+
+/* Conteneur principal avec trois colonnes */
+.three-column-container {
+    display: block ruby;
+    justify-content: space-between;
+    /* Espace égal entre les colonnes */
+    align-items: center;
+    /* Aligner les colonnes en haut */
+    gap: 20px;
+    width: 100%;
+    /* Espacement entre les colonnes */
+}
+
+/* Style des colonnes */
+.column {
+    flex: 1;
+    /* Chaque colonne prend une part égale de l'espace disponible */
+    width: 49%;
 }
 
 /* Police pour les titres */
@@ -163,7 +199,7 @@ canvas {
 #scene5 {
     position: absolute;
     top: 800vh;
-    width: 50%;
+    width: 100%;
     z-index: 10;
     /* Le texte doit apparaître au-dessus du canvas 3D */
 }
@@ -174,6 +210,10 @@ canvas {
     width: 33%;
     z-index: 10;
     /* Le texte doit apparaître au-dessus du canvas 3D */
+}
+
+.get-resume {
+    margin-top: 50px;
 }
 
 /* Effets de glow pour donner un côté vaporwave */

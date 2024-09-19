@@ -94,7 +94,7 @@ const animationScripts = [
       camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
       camera.position.y = lerp(10, 1, scalePercent(0, 20));
 
-      camera.lookAt(0, 10, 0); // Toujours regarder le centre de la statue
+      camera.lookAt(0, 10, lerp(0, 45, scalePercent(0, 20))); // Toujours regarder le centre de la statue
     },
   },
   {
@@ -153,9 +153,9 @@ const animationScripts = [
   },
   {
     start: 80,
-    end: 90,
+    end: 100,
     func: () => {
-      angle = lerp(0, 1, scalePercent(20, 40));
+      angle = lerp(0, 5, scalePercent(20, 40));
       camera.rotation.y = 0;
       const radius = 15; // Distance entre la caméra et la statue
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X // Calcul de la position X
@@ -170,15 +170,19 @@ const animationScripts = [
     },
   },
   {
-    start: 90,
+    start: 100,
     end: 120,
     func: () => {
       camera.rotation.y = 0;
-      const radius = lerp(15, 10, scalePercent(90, 120)); // Distance entre la caméra et la statue
+      const radius = lerp(15, 30, scalePercent(90, 120)); // Distance entre la caméra et la statue
       camera.position.y = lerp(1, 10, scalePercent(90, 120));
       angle += 0.001; // Vitesse de rotation
       camera.position.x = radius * Math.sin(angle); // Calcul de la position X
-      camera.position.z = radius * Math.cos(angle); // Calcul de la position Z
+      camera.position.z = lerp(
+        radius * Math.cos(angle),
+        1,
+        scalePercent(90, 120)
+      ); // Calcul de la position Z
 
       camera.lookAt(0, 10, 0); // Toujours regarder le centre de la statue
     },
@@ -197,8 +201,6 @@ document.body.onscroll = () => {
       ((document.documentElement.scrollHeight || document.body.scrollHeight) -
         document.documentElement.clientHeight)) *
     100;
-  document.getElementById("scrollProgress").innerText =
-    "Scroll Progress : " + scrollPercent.toFixed(2);
 };
 
 function playScrollAnimations() {
@@ -270,7 +272,7 @@ window.addEventListener("scroll", () => {
   autoScrollTimeout = setTimeout(() => {
     isUserScrolling = false;
     scrollToScene(scrollDirection); // Scroll automatique vers la scène dans la bonne direction
-  }, 750); // Temps d'attente après l'arrêt du scroll manuel
+  }, 1000); // Temps d'attente après l'arrêt du scroll manuel
 });
 
 window.onbeforeunload = function () {
