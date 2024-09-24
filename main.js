@@ -153,7 +153,7 @@ const animationScripts = [
   },
   {
     start: 80,
-    end: 100,
+    end: 90,
     func: () => {
       angle = lerp(0, 5, scalePercent(20, 40));
       camera.rotation.y = 0;
@@ -170,7 +170,7 @@ const animationScripts = [
     },
   },
   {
-    start: 100,
+    start: 90,
     end: 120,
     func: () => {
       camera.rotation.y = 0;
@@ -231,7 +231,7 @@ function scrollToScene(direction) {
     nextSceneScroll = Math.floor(currentScroll / scrollAmount) * scrollAmount; // Vers la scène précédente
   }
 
-  const scrollDuration = 500; // Durée de l'animation en ms
+  const scrollDuration = 1000; // Durée de l'animation en ms
   const startTime = Date.now();
 
   function scrollStep() {
@@ -270,17 +270,53 @@ window.addEventListener("scroll", () => {
 
   // Lancer l'auto-scroll après une pause du scroll manuel
   autoScrollTimeout = setTimeout(() => {
-    if (isUserScrolling) {
-      isUserScrolling = false;
-      scrollToScene(scrollDirection);
-    }
+    isUserScrolling = false;
+    scrollToScene(scrollDirection);
     // Scroll automatique vers la scène dans la bonne direction
-  }, 500); // Temps d'attente après l'arrêt du scroll manuel
+  }, 1000); // Temps d'attente après l'arrêt du scroll manuel
 });
 
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
 };
+
+const points = document.querySelectorAll(".point");
+const progress = document.querySelector(".progress");
+const totalSections = points.length;
+const sectionHeight = 100; // Chaque section fait 200vh, on utilise donc 100 pour les pourcentages
+
+// Mettre à jour la barre de progression en fonction du défilement
+window.addEventListener("scroll", () => {
+  const scrollTop = window.scrollY;
+  const maxScroll = document.body.scrollHeight;
+  const scrollPercentage = (scrollTop / maxScroll) * 100;
+
+  progress.style.width = `${scrollPercentage}%`;
+
+  console.log(`${scrollPercentage}%`);
+  console.log("ScrollY " + window.scrollY);
+  console.log("maxScroll " + document.body.scrollHeight);
+
+  // Mettre à jour l'état actif des points de la barre de progression
+  points.forEach((point, index) => {
+    // Ajuster la condition pour correspondre précisément aux sections
+    const sectionScrollPercentage = (index / totalSections) * 100;
+    if (scrollPercentage >= sectionScrollPercentage) {
+      point.classList.add("active");
+    } else {
+      point.classList.remove("active");
+    }
+  });
+});
+// Défilement vers la section correspondante lors du clic sur un point
+points.forEach((point, index) => {
+  point.addEventListener("click", () => {
+    window.scrollTo({
+      top: (index * sectionHeight * window.innerHeight) / 50, // Conversion de pourcentage en pixels
+      behavior: "smooth", // Défilement fluide
+    });
+  });
+});
 
 // Animation pour faire tourner la caméra autour du buste
 

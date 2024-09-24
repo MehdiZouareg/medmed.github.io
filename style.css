@@ -166,7 +166,7 @@ canvas {
 
 #scene1 {
     position: absolute;
-    top: 5px;
+    top: 0;
     width: 33%; 
     z-index: 10;
     /* Le texte doit apparaître au-dessus du canvas 3D */
@@ -212,8 +212,48 @@ canvas {
     /* Le texte doit apparaître au-dessus du canvas 3D */
 }
 
+
 .get-resume {
     margin-top: 50px;
+}
+
+.progress-bar {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 10px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #3498db;
+    width: 0;
+    border-radius: 5px;
+}
+
+.progress-points {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    top: -10px;
+    width: 100%;
+}
+
+.point {
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.point.active {
+    background-color: #3498db;
 }
 
 /* Effets de glow pour donner un côté vaporwave */
